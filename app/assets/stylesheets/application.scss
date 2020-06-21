@@ -15,3 +15,22 @@
  */
 @import "bootstrap-sprockets";  /*ここを追加*/
 @import "bootstrap";            /*ここを追加*/
+
+.text-white {
+	color: white;
+	font-size: 20px;
+	margin-left: 30px;
+}
+.glyphicon {
+	margin-right: 30px
+}
+main {
+	margin-left: 40px;
+}
+a {
+	color:#000;
+}
+a:hover {
+	background-color: #000;
+	color: #00F;
+}
