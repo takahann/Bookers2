@@ -3,14 +3,16 @@ class BooksController < ApplicationController
   before_action :correct_book, only: [:edit, :update]
   def index
     @book = Book.new
+    @favorite = Favorite.new
     @books = Book.all
     @user = current_user
   end
 
   def show
-    # @books = Book.new
+    @book = Book.new
+    # @favorite = Favorite.new
+    @book_comment = BookComment.new
     @book = Book.find(params[:id])
-    # @books = Book.all
     @user = User.find(@book.user_id)
   end
 
