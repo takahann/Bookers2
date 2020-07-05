@@ -1,21 +1,49 @@
 <h2>User info</h2>
-<%= attachment_image_tag @user, :profile_image, class: "user-image", fallback: "no_image.jpg", size: "100x100" %>
-<table class="table">
-  <tbody>
-    <tr>
+  <%= attachment_image_tag @user, :profile_image, class: "user-image", fallback: "no_image.jpg", size: "100x100" %>
+  <table class="table">
+    <tbody>
+      <tr>
         <th>name</th>
         <th><%= @user.name %></th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <th>introduction</th>
         <th><%= @user.introduction %></th>
-    </tr>
-  </tbody>
-</table>
+      </tr>
+      <tr>
+        <th>follows</th>
+        <th>
+          <%= link_to @user.followings.count, following_user_path(@user) %>
+        </th>
+      </tr>
+
+      <tr>
+        <th>followers</th>
+        <th>
+          <%= link_to @user.followers.count, followers_user_path(@user) %>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+    <% unless current_user == user %>
+      <% if current_user.following?(user) %>
+        <%= form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }) do |f| %>
+        <%= hidden_field_tag :follow_id, user.id %>
+        <%= f.submit 'フォローを外す',class: "btn btn-success col-xs-7" %>
+      <% end %>
+      <% else %>
+        <%= form_for(current_user.relationships.build) do |f| %>
+        <%= hidden_field_tag :follow_id, user.id %>
+        <%= f.submit 'フォローする',class: "btn btn-sm btn-info col-xs-7" %>
+    <% end %>
+  <% end %>
+  <% end %>
 <div class="row">
+  <% unless current_user != user %>
   <%= link_to edit_user_path(current_user) do %>
     <i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_6144" >
     </i>
+  <% end %>
   <% end %>
 </div>
 
